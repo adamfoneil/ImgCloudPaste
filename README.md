@@ -15,3 +15,9 @@ Here are a few noteable things about my solution:
 - The [settings dialog](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/Forms/frmSettings.cs) is here. It's invoked from the main form [here](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/frmMain.cs#L53).
 
 - I had some trouble getting the actual paste functionality to work on the main form. I got it working setting `KeyPreview = true` and handling the [KeyDown](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/frmMain.cs#L26) event. I tried overriding `WndProc` and checking for `WM_PASTE` but I couldn't get that working. I wanted a really flexible paste mechanism that would accept the paste no matter where focus is at the moment, and not rely on a certain key stroke. But like I said, the only thing I could make work was handling the `KeyDown` event.
+
+## Next Steps
+
+You'll notice I have a second tab in the main UI **Images**. This is meant to be a history of my uploads. There isn't a good "built-in" thumbnail viewer that I'm aware of. The `ListView` control might work, but I'm not sure. So, next I'd like to get this working so you can quickly access previous uploads.
+
+I considered adding a feature to let you describe an image with a few words. These would be added as blob metadata, searchable from the Images tag.
