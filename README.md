@@ -2,7 +2,7 @@ I often need to paste screenshots in places that don't support image paste nativ
 
 ![img](https://adamosoftware.blob.core.windows.net/images/BEV8P39JNN.png)
 
-This would be a neat idea for a Blazor Web Assembly app I think, but WinForms is the lower hanging fruit for me, so I went this direction. I did find an existing online service for this [Pasteboard](https://pasteboard.co/), but it wasn't easy enough to get image links, and it doesn't have a markdown option. This is the kind of service I'd like to build in Blazor, but with
+This would be a neat idea for a Blazor Web Assembly app I think, but WinForms is the lower hanging fruit for me, so I went this direction. I did find an existing online service for this [Pasteboard](https://pasteboard.co/), but it wasn't easy enough to get image links, and it doesn't have a markdown option.
 
 My solution requires you to have an Azure storage account. Likewise, as a desktop app, it's really hard to provide an easy deployment. My code signing certificate (which was very difficult to get initially) recently stopped working for some reason. That's another story.
 
