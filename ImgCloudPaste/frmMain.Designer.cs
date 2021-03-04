@@ -29,21 +29,22 @@ namespace ImgCloudPaste
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.btnSettings = new System.Windows.Forms.Button();
+            this.btnCopyMarkdown = new System.Windows.Forms.Button();
+            this.btnCopyRaw = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.panel1.SuspendLayout();
-            this.tableLayoutPanel1.SuspendLayout();
+            this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl1
@@ -54,17 +55,16 @@ namespace ImgCloudPaste
             this.tabControl1.Location = new System.Drawing.Point(0, 46);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(584, 297);
+            this.tabControl1.Size = new System.Drawing.Size(584, 275);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.pictureBox1);
-            this.tabPage1.Controls.Add(this.tableLayoutPanel1);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(576, 271);
+            this.tabPage1.Size = new System.Drawing.Size(576, 249);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Paste Here";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -74,7 +74,7 @@ namespace ImgCloudPaste
             this.pictureBox1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pictureBox1.Location = new System.Drawing.Point(3, 3);
             this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(570, 235);
+            this.pictureBox1.Size = new System.Drawing.Size(570, 243);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 0;
             this.pictureBox1.TabStop = false;
@@ -84,14 +84,15 @@ namespace ImgCloudPaste
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(576, 271);
+            this.tabPage2.Size = new System.Drawing.Size(576, 249);
             this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
+            this.tabPage2.Text = "Images";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.btnSettings);
+            this.panel1.Controls.Add(this.btnCopyMarkdown);
+            this.panel1.Controls.Add(this.btnCopyRaw);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
@@ -99,16 +100,35 @@ namespace ImgCloudPaste
             this.panel1.Size = new System.Drawing.Size(584, 46);
             this.panel1.TabIndex = 1;
             // 
-            // btnSettings
+            // btnCopyMarkdown
             // 
-            this.btnSettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnSettings.Location = new System.Drawing.Point(497, 12);
-            this.btnSettings.Name = "btnSettings";
-            this.btnSettings.Size = new System.Drawing.Size(75, 23);
-            this.btnSettings.TabIndex = 1;
-            this.btnSettings.Text = "Settings....";
-            this.btnSettings.UseVisualStyleBackColor = true;
-            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
+            this.btnCopyMarkdown.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyMarkdown.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyMarkdown.Image")));
+            this.btnCopyMarkdown.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCopyMarkdown.Location = new System.Drawing.Point(485, 12);
+            this.btnCopyMarkdown.Name = "btnCopyMarkdown";
+            this.btnCopyMarkdown.Size = new System.Drawing.Size(87, 23);
+            this.btnCopyMarkdown.TabIndex = 2;
+            this.btnCopyMarkdown.Text = "Markdown";
+            this.btnCopyMarkdown.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCopyMarkdown.UseVisualStyleBackColor = true;
+            this.btnCopyMarkdown.Visible = false;
+            this.btnCopyMarkdown.Click += new System.EventHandler(this.btnCopyMarkdown_Click);
+            // 
+            // btnCopyRaw
+            // 
+            this.btnCopyRaw.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnCopyRaw.Image = ((System.Drawing.Image)(resources.GetObject("btnCopyRaw.Image")));
+            this.btnCopyRaw.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnCopyRaw.Location = new System.Drawing.Point(392, 12);
+            this.btnCopyRaw.Name = "btnCopyRaw";
+            this.btnCopyRaw.Size = new System.Drawing.Size(87, 23);
+            this.btnCopyRaw.TabIndex = 1;
+            this.btnCopyRaw.Text = "Raw Url";
+            this.btnCopyRaw.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnCopyRaw.UseVisualStyleBackColor = true;
+            this.btnCopyRaw.Visible = false;
+            this.btnCopyRaw.Click += new System.EventHandler(this.btnCopyRaw_Click);
             // 
             // label1
             // 
@@ -119,49 +139,25 @@ namespace ImgCloudPaste
             this.label1.TabIndex = 0;
             this.label1.Text = "Paste an image below to upload it to Azure blob storage, and get a link to it.";
             // 
-            // tableLayoutPanel1
+            // statusStrip1
             // 
-            this.tableLayoutPanel1.ColumnCount = 2;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Controls.Add(this.linkLabel1, 0, 0);
-            this.tableLayoutPanel1.Controls.Add(this.linkLabel2, 1, 0);
-            this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 238);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 1;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(570, 30);
-            this.tableLayoutPanel1.TabIndex = 0;
-            this.tableLayoutPanel1.Visible = false;
+            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripStatusLabel1});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 321);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(584, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
             // 
-            // linkLabel1
+            // toolStripStatusLabel1
             // 
-            this.linkLabel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel1.Location = new System.Drawing.Point(3, 0);
-            this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(279, 30);
-            this.linkLabel1.TabIndex = 0;
-            this.linkLabel1.TabStop = true;
-            this.linkLabel1.Text = "Raw Url";
-            this.linkLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
-            // 
-            // linkLabel2
-            // 
-            this.linkLabel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.linkLabel2.Location = new System.Drawing.Point(288, 0);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(279, 30);
-            this.linkLabel2.TabIndex = 1;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "Markdown Image Url";
-            this.linkLabel2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkLabel2.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel2_LinkClicked);
+            this.toolStripStatusLabel1.IsLink = true;
+            this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(569, 17);
+            this.toolStripStatusLabel1.Spring = true;
+            this.toolStripStatusLabel1.Text = "Settings...";
+            this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
             // 
             // frmMain
             // 
@@ -169,6 +165,7 @@ namespace ImgCloudPaste
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 343);
             this.Controls.Add(this.tabControl1);
+            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.panel1);
             this.KeyPreview = true;
             this.Name = "frmMain";
@@ -181,8 +178,10 @@ namespace ImgCloudPaste
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
-            this.tableLayoutPanel1.ResumeLayout(false);
+            this.statusStrip1.ResumeLayout(false);
+            this.statusStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -192,12 +191,12 @@ namespace ImgCloudPaste
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button btnSettings;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel1;
+        private System.Windows.Forms.Button btnCopyRaw;
+        private System.Windows.Forms.Button btnCopyMarkdown;
     }
 }
 

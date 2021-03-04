@@ -16,17 +16,6 @@ namespace ImgCloudPaste
             InitializeComponent();
         }
 
-        private void btnSettings_Click(object sender, EventArgs e)
-        {
-            frmSettings dlg = new frmSettings();
-            dlg.Settings = _settings.Clone() as Settings;
-            if (dlg.ShowDialog() == DialogResult.OK)
-            {
-                _settings = dlg.Settings;
-                _settings.Save();
-            }
-        }
-
         private void frmMain_Load(object sender, EventArgs e)
         {
             _settings = SettingsBase.Load<Settings>();
@@ -42,22 +31,41 @@ namespace ImgCloudPaste
                     var image = Clipboard.GetImage();
                     pictureBox1.Image = image;
                     await _cloudPaste.UploadAndGetUrlsAsync(image);
-                    tableLayoutPanel1.Visible = true;
+                    btnCopyMarkdown.Visible = true;
+                    btnCopyRaw.Visible = true;
+                    tabControl1.SelectedIndex = 0;
                 }
                 catch (Exception exc)
                 {
-                    tableLayoutPanel1.Visible = false;
+                    btnCopyMarkdown.Visible = false;
+                    btnCopyRaw.Visible = false;
                     MessageBox.Show($"Error uploading image: {exc.Message}");  
                 }
             }
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Clipboard.SetText(_cloudPaste.MarkdownUrl);
+        }
+
+        private void toolStripStatusLabel1_Click(object sender, EventArgs e)
+        {
+            frmSettings dlg = new frmSettings();
+            dlg.Settings = _settings.Clone() as Settings;
+            if (dlg.ShowDialog() == DialogResult.OK)
+            {
+                _settings = dlg.Settings;
+                _settings.Save();
+            }
+        }
+
+        private void btnCopyRaw_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(_cloudPaste.RawUrl);
         }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void btnCopyMarkdown_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(_cloudPaste.MarkdownUrl);
         }
