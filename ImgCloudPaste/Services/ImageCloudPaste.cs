@@ -1,43 +1,14 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using JsonSettings;
-using JsonSettings.Library;
+using ImgCloudPaste.Models;
 using StringIdLibrary;
-using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
-using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace ImgCloudPaste.Services
 {
-    public class Settings : SettingsBase, ICloneable
-    {
-        /// <summary>
-        /// azure storage connection string
-        /// </summary>
-        [JsonProtect(DataProtectionScope.CurrentUser)]
-        public string ConnectionString { get; set; }
-
-        /// <summary>
-        /// upload container
-        /// </summary>
-        [JsonProtect(DataProtectionScope.CurrentUser)]
-        public string ContainerName { get; set; }
-
-        public override string Filename => BuildPath(Environment.SpecialFolder.LocalApplicationData, "ImgCloudPaste", "settings.json");
-
-        public object Clone()
-        {
-            return new Settings()
-            {
-                ConnectionString = this.ConnectionString,
-                ContainerName = this.ContainerName
-            };
-        }
-    }
-
     public class ImageCloudPaste
     {
         private readonly Settings _settings;
