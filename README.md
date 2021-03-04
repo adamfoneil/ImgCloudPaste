@@ -20,4 +20,4 @@ Here are a few noteable things about my solution:
 
 You'll notice I have a second tab in the main UI **Images**. This is meant to be a history of my uploads. There isn't a good "built-in" thumbnail viewer that I'm aware of. The `ListView` control might work, but I'm not sure. So, next I'd like to get this working so you can quickly access previous uploads.
 
-I considered adding a feature to let you describe an image with a few words. These would be added as blob metadata, searchable from the Images tag.
+I considered adding a feature to let you describe an image with a few words. These would be added as blob metadata, searchable from the Images tab.
