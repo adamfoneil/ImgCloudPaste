@@ -1,25 +1,41 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using JsonSettings;
+using JsonSettings.Library;
 using StringIdLibrary;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace ImgCloudPaste.Services
 {
-    public class Settings
+    public class Settings : SettingsBase, ICloneable
     {
         /// <summary>
         /// azure storage connection string
         /// </summary>
+        [JsonProtect(DataProtectionScope.CurrentUser)]
         public string ConnectionString { get; set; }
 
         /// <summary>
         /// upload container
         /// </summary>
+        [JsonProtect(DataProtectionScope.CurrentUser)]
         public string ContainerName { get; set; }
+
+        public override string Filename => BuildPath(Environment.SpecialFolder.LocalApplicationData, "ImgCloudPaste", "settings.json");
+
+        public object Clone()
+        {
+            return new Settings()
+            {
+                ConnectionString = this.ConnectionString,
+                ContainerName = this.ContainerName
+            };
+        }
     }
 
     public class ImageCloudPaste
@@ -31,7 +47,10 @@ namespace ImgCloudPaste.Services
             _settings = settings;
         }
 
-        public async Task<string> UploadAndGetUrlAsync(Image image)
+        public string RawUrl { get; private set; }
+        public string MarkdownUrl { get; private set; }
+
+        public async Task UploadAndGetUrlsAsync(Image image)
         {
             var info = GetFileInfo(image);
             var name = StringId.New(10, StringIdRanges.Upper | StringIdRanges.Numeric) + info.extension;            
@@ -39,21 +58,23 @@ namespace ImgCloudPaste.Services
             
             using (var ms = new MemoryStream())
             {
-                image.Save(ms, image.RawFormat);
+                image.Save(ms, info.format);
+                ms.Position = 0;
                 await client.UploadAsync(ms, new BlobHttpHeaders()
                 {
                     ContentType = info.contentType
                 });
             }
 
-            return client.Uri.AbsoluteUri;
+            RawUrl = client.Uri.AbsoluteUri;
+            MarkdownUrl = $"![img]({RawUrl})";
         }
 
-        private (string extension, string contentType) GetFileInfo(Image image) =>
-            (image.RawFormat.Equals(ImageFormat.Png)) ? (".png", "image/png") :
-            (image.RawFormat.Equals(ImageFormat.Jpeg)) ? (".jpg", "image/jpg") :
-            (image.RawFormat.Equals(ImageFormat.Gif)) ? (".gif", "image/gif") :
-            (image.RawFormat.Equals(ImageFormat.Bmp)) ? (".bmp", "image/bitmap") :
-            throw new InvalidOperationException($"Unsupported image format: {image.RawFormat}");
+        private (string extension, string contentType, ImageFormat format) GetFileInfo(Image image) =>
+            (image.RawFormat.Equals(ImageFormat.Png)) ? (".png", "image/png", image.RawFormat) :
+            (image.RawFormat.Equals(ImageFormat.Jpeg)) ? (".jpg", "image/jpg", image.RawFormat) :
+            (image.RawFormat.Equals(ImageFormat.Gif)) ? (".gif", "image/gif", image.RawFormat) :
+            (image.RawFormat.Equals(ImageFormat.Bmp)) ? (".bmp", "image/bitmap", image.RawFormat) :
+            (".png", "image/png", ImageFormat.Png);
     }
 }
