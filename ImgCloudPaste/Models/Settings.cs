@@ -21,6 +21,9 @@ namespace ImgCloudPaste.Models
 
         public override string Filename => BuildPath(Environment.SpecialFolder.LocalApplicationData, "ImgCloudPaste", "settings.json");
 
+        /// <summary>
+        /// this is so we can display settings in a dialog and cancel out of it without affecting the original settings
+        /// </summary>        
         public object Clone()
         {
             return new Settings()
