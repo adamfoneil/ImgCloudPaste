@@ -46,6 +46,8 @@ namespace ImgCloudPaste.Services
             (image.RawFormat.Equals(ImageFormat.Jpeg)) ? (".jpg", "image/jpg", image.RawFormat) :
             (image.RawFormat.Equals(ImageFormat.Gif)) ? (".gif", "image/gif", image.RawFormat) :
             (image.RawFormat.Equals(ImageFormat.Bmp)) ? (".bmp", "image/bitmap", image.RawFormat) :
+            // SnagIt has some kind of custom image format that isn't recognized by the built in ImageFormat values,
+            // so I just fall back to png when the type isn't recognized
             (".png", "image/png", ImageFormat.Png);
     }
 }
