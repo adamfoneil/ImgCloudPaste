@@ -1,7 +1,9 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
+using ImgCloudPaste.Controls;
 using ImgCloudPaste.Models;
 using StringIdLibrary;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -21,12 +23,18 @@ namespace ImgCloudPaste.Services
         public string RawUrl { get; private set; }
         public string MarkdownUrl { get; private set; }
 
-        public async Task UploadAndGetUrlsAsync(Image image)
+        public async Task AddAsync(Image image)
         {
             var info = GetFileInfo(image);
-            var name = StringId.New(10, StringIdRanges.Upper | StringIdRanges.Numeric) + info.extension;            
+            var name = StringId.New(10, StringIdRanges.Upper | StringIdRanges.Numeric) + info.extension;
+            await UpdateAsync(name, image);
+        }
+
+        public async Task UpdateAsync(string name, Image image)
+        {
+            var info = GetFileInfo(image);
             var client = new BlobClient(_settings.ConnectionString, _settings.ContainerName, name);
-            
+
             using (var ms = new MemoryStream())
             {
                 image.Save(ms, info.format);
@@ -41,6 +49,16 @@ namespace ImgCloudPaste.Services
             MarkdownUrl = $"![img]({RawUrl})";
         }
 
+        public IEnumerable<BlobItem> GetBlobs()
+        {
+            var client = new BlobContainerClient(_settings.ConnectionString, _settings.ContainerName);
+            var pages = client.GetBlobs().AsPages();
+
+            List<BlobItem> results = new List<BlobItem>();
+            foreach (var page in pages) results.AddRange(page.Values);
+            return results;
+        }
+
         private (string extension, string contentType, ImageFormat format) GetFileInfo(Image image) =>
             (image.RawFormat.Equals(ImageFormat.Png)) ? (".png", "image/png", image.RawFormat) :
             (image.RawFormat.Equals(ImageFormat.Jpeg)) ? (".jpg", "image/jpg", image.RawFormat) :
@@ -49,5 +67,15 @@ namespace ImgCloudPaste.Services
             // SnagIt has some kind of custom image format that isn't recognized by the built in ImageFormat values,
             // so I just fall back to png when the type isn't recognized
             (".png", "image/png", ImageFormat.Png);
+
+        public async Task<Image> GetBlobImageAsync(BlobItem blob)
+        {
+            var client = new BlobClient(_settings.ConnectionString, _settings.ContainerName, blob.Name);
+                       
+            using (var stream = await client.OpenReadAsync())
+            {
+                return Image.FromStream(stream);
+            }
+        }
     }
 }

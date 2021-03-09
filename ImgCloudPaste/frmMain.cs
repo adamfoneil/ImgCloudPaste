@@ -1,8 +1,10 @@
-﻿using ImgCloudPaste.Forms;
+﻿using ImgCloudPaste.Controls;
+using ImgCloudPaste.Forms;
 using ImgCloudPaste.Models;
 using ImgCloudPaste.Services;
 using JsonSettings.Library;
 using System;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace ImgCloudPaste
@@ -21,6 +23,26 @@ namespace ImgCloudPaste
         {
             _settings = SettingsBase.Load<Settings>();
             _cloudPaste = new ImageCloudPaste(_settings);
+            ListBlobs();
+        }
+
+        private void ListBlobs()
+        {
+            lvBlobs.Items.Clear();
+            lvBlobs.Groups.Clear();
+
+            var blobGroups = _cloudPaste.GetBlobs()
+                .OrderByDescending(blob => blob.Properties.CreatedOn)
+                .Take(100)
+                .GroupBy(blob => blob.Properties.CreatedOn.Value.DateTime);
+                
+            // grouping doesn't work for some reason
+            foreach (var grp in blobGroups)
+            {
+                int groupIndex = lvBlobs.Groups.Add(new ListViewGroup(grp.Key.ToString("ddd M/d"), HorizontalAlignment.Left));
+                var items = grp.Select(blob => new BlobListViewItem(blob) { Group = lvBlobs.Groups[groupIndex] }).ToArray();
+                lvBlobs.Items.AddRange(items);
+            }            
         }
 
         private async void frmMain_KeyDown(object sender, KeyEventArgs e)
@@ -31,7 +53,7 @@ namespace ImgCloudPaste
                 {
                     var image = Clipboard.GetImage();
                     pictureBox1.Image = image;
-                    await _cloudPaste.UploadAndGetUrlsAsync(image);
+                    await _cloudPaste.AddAsync(image);
                     btnCopyMarkdown.Visible = true;
                     btnCopyRaw.Visible = true;
                     tabControl1.SelectedIndex = 0;
@@ -69,6 +91,44 @@ namespace ImgCloudPaste
         private void btnCopyMarkdown_Click(object sender, EventArgs e)
         {
             Clipboard.SetText(_cloudPaste.MarkdownUrl);
+        }
+
+        private async void lvBlobs_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
+        {
+            if (e.IsSelected)
+            {
+                var blobItem = e.Item as BlobListViewItem;
+                if (blobItem != null)
+                {
+                    pbBlob.Image = await _cloudPaste.GetBlobImageAsync(blobItem.Blob);
+                    lblBlobName.Text = blobItem.Blob.Name;
+                }
+            }
+        }
+
+        private void btnCopy_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                Clipboard.SetImage(pbBlob.Image);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+        }
+
+        private async void btnUpdate_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                pbBlob.Image = Clipboard.GetImage();
+                await _cloudPaste.UpdateAsync(lblBlobName.Text, pbBlob.Image);
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
     }
 }
