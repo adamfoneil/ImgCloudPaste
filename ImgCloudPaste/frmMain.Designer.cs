@@ -29,6 +29,8 @@ namespace ImgCloudPaste
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.ListViewGroup listViewGroup1 = new System.Windows.Forms.ListViewGroup("Group 1", System.Windows.Forms.HorizontalAlignment.Left);
+            System.Windows.Forms.ListViewItem listViewItem1 = new System.Windows.Forms.ListViewItem("Sample Item");
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmMain));
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -39,6 +41,7 @@ namespace ImgCloudPaste
             this.colName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.colDate = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.pbBlob = new System.Windows.Forms.PictureBox();
+            this.lblBlobName = new System.Windows.Forms.Label();
             this.panel2 = new System.Windows.Forms.Panel();
             this.btnUpdate = new System.Windows.Forms.Button();
             this.btnCopy = new System.Windows.Forms.Button();
@@ -48,7 +51,6 @@ namespace ImgCloudPaste
             this.label1 = new System.Windows.Forms.Label();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
-            this.lblBlobName = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
@@ -131,7 +133,14 @@ namespace ImgCloudPaste
             this.colName,
             this.colDate});
             this.lvBlobs.Dock = System.Windows.Forms.DockStyle.Fill;
+            listViewGroup1.Header = "Group 1";
+            listViewGroup1.Name = "listViewGroup1";
+            this.lvBlobs.Groups.AddRange(new System.Windows.Forms.ListViewGroup[] {
+            listViewGroup1});
             this.lvBlobs.HideSelection = false;
+            listViewItem1.Group = listViewGroup1;
+            this.lvBlobs.Items.AddRange(new System.Windows.Forms.ListViewItem[] {
+            listViewItem1});
             this.lvBlobs.Location = new System.Drawing.Point(0, 0);
             this.lvBlobs.MultiSelect = false;
             this.lvBlobs.Name = "lvBlobs";
@@ -157,6 +166,15 @@ namespace ImgCloudPaste
             this.pbBlob.Size = new System.Drawing.Size(329, 176);
             this.pbBlob.TabIndex = 1;
             this.pbBlob.TabStop = false;
+            // 
+            // lblBlobName
+            // 
+            this.lblBlobName.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblBlobName.Location = new System.Drawing.Point(0, 0);
+            this.lblBlobName.Name = "lblBlobName";
+            this.lblBlobName.Size = new System.Drawing.Size(329, 18);
+            this.lblBlobName.TabIndex = 2;
+            this.lblBlobName.Text = "label2";
             // 
             // panel2
             // 
@@ -184,7 +202,7 @@ namespace ImgCloudPaste
             this.btnCopy.Name = "btnCopy";
             this.btnCopy.Size = new System.Drawing.Size(119, 23);
             this.btnCopy.TabIndex = 0;
-            this.btnCopy.Text = "Copy";
+            this.btnCopy.Text = "Copy Image";
             this.btnCopy.UseVisualStyleBackColor = true;
             this.btnCopy.Click += new System.EventHandler(this.btnCopy_Click);
             // 
@@ -257,15 +275,6 @@ namespace ImgCloudPaste
             this.toolStripStatusLabel1.Text = "Settings...";
             this.toolStripStatusLabel1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.toolStripStatusLabel1.Click += new System.EventHandler(this.toolStripStatusLabel1_Click);
-            // 
-            // lblBlobName
-            // 
-            this.lblBlobName.Dock = System.Windows.Forms.DockStyle.Top;
-            this.lblBlobName.Location = new System.Drawing.Point(0, 0);
-            this.lblBlobName.Name = "lblBlobName";
-            this.lblBlobName.Size = new System.Drawing.Size(329, 18);
-            this.lblBlobName.TabIndex = 2;
-            this.lblBlobName.Text = "label2";
             // 
             // frmMain
             // 

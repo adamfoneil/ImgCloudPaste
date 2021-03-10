@@ -28,8 +28,8 @@ namespace ImgCloudPaste
 
         private void ListBlobs()
         {
-            lvBlobs.Items.Clear();
-            lvBlobs.Groups.Clear();
+            //lvBlobs.Items.Clear();
+            //lvBlobs.Groups.Clear();
 
             var blobGroups = _cloudPaste.GetBlobs()
                 .OrderByDescending(blob => blob.Properties.CreatedOn)
@@ -42,7 +42,14 @@ namespace ImgCloudPaste
                 int groupIndex = lvBlobs.Groups.Add(new ListViewGroup(grp.Key.ToString("ddd M/d"), HorizontalAlignment.Left));
                 var items = grp.Select(blob => new BlobListViewItem(blob) { Group = lvBlobs.Groups[groupIndex] }).ToArray();
                 lvBlobs.Items.AddRange(items);
-            }            
+            }
+
+            lvBlobs.ShowGroups = true;
+            var sampleGrp = new ListViewGroup("whatever");
+            lvBlobs.Groups.Add(sampleGrp);
+            var item = new ListViewItem("hello");
+            item.Group = sampleGrp;
+            lvBlobs.Items.Add(item);
         }
 
         private async void frmMain_KeyDown(object sender, KeyEventArgs e)
