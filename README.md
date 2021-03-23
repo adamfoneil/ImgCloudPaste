@@ -12,7 +12,7 @@ Here are a few noteable things about my solution:
 
 - That said, my [Settings](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/Models/Settings.cs) model does depend on my [Json Settings](https://github.com/adamfoneil/JsonSettings) library, which in turn depends on Newtonsoft. I used this because this app uses Azure connection strings. These are pretty sensitive, so I use DPAPI encryption. My Json settings library supports this, but I'm not wild about the dependency footprint of my own library. I would likely want to rework this so the encryption capability is injected.
 
-- The [settings dialog](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/Forms/frmSettings.cs) is here. It's invoked from the main form [here](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/frmMain.cs#L53).
+- The [settings dialog](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/Forms/frmSettings.cs) is here. It's invoked from the main form [here](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/frmMain.cs#L75).
 
 - I had some trouble getting the actual paste functionality to work on the main form. I got it working setting `KeyPreview = true` and handling the [KeyDown](https://github.com/adamfoneil/ImgCloudPaste/blob/master/ImgCloudPaste/frmMain.cs#L26) event. I tried overriding `WndProc` and checking for `WM_PASTE` but I couldn't get that working. I wanted a really flexible paste mechanism that would accept the paste no matter where focus is at the moment, and not rely on a certain key stroke. But like I said, the only thing I could make work was handling the `KeyDown` event.
 
