@@ -117,7 +117,27 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="btnCopyMarkdown.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAT1JREFUOE+N
+        kq12hDAQhXkUHoFHQCJxXYmsxLUysjISGYmMXBmJjFwZWRlZN507U34K7B7uOfdgyHdvZlL4kEgd1fdI
+        zkfqelsVV4TDezkfqDPuGgSpe9kxUJi4hULe/n49FypD4aGGrPMCEEhvX0NQd6ucFeCnzDNRu3sm69Vm
+        zFTd/Ho1x3UhpPPsKKYsBuBMAngPgGirGSD60Qbpm1M5+Uz9oHAGwB8FBga5iatzVeMT9S5xbd2O9auh
+        zqb5MJWtowWQJT1LOq5gx+N6Z0lDvq8CeGA4PCeLh0iGv9C2QT8kadAafWwrgK8rw3skCpE9McQe3weC
+        kB7irkHVdAd3XwrA1OFt+tKgYcAztZ/H94GWSJe3we+nbOxzQN0rYJu6NdZ/CYCq/x3kMLZX1i8A867n
+        fS/mVDEfLmtDv0crc7rCwzN3AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="btnCopyRaw.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAAT1JREFUOE+N
+        kq12hDAQhXkUHoFHQCJxXYmsxLUysjISGYmMXBmJjFwZWRlZN507U34K7B7uOfdgyHdvZlL4kEgd1fdI
+        zkfqelsVV4TDezkfqDPuGgSpe9kxUJi4hULe/n49FypD4aGGrPMCEEhvX0NQd6ucFeCnzDNRu3sm69Vm
+        zFTd/Ho1x3UhpPPsKKYsBuBMAngPgGirGSD60Qbpm1M5+Uz9oHAGwB8FBga5iatzVeMT9S5xbd2O9auh
+        zqb5MJWtowWQJT1LOq5gx+N6Z0lDvq8CeGA4PCeLh0iGv9C2QT8kadAafWwrgK8rw3skCpE9McQe3weC
+        kB7irkHVdAd3XwrA1OFt+tKgYcAztZ/H94GWSJe3we+nbOxzQN0rYJu6NdZ/CYCq/x3kMLZX1i8A867n
+        fS/mVDEfLmtDv0crc7rCwzN3AAAAAElFTkSuQmCC
+</value>
+  </data>
 </root>

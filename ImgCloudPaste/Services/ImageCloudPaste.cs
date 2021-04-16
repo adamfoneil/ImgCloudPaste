@@ -20,17 +20,14 @@ namespace ImgCloudPaste.Services
             _settings = settings;
         }
 
-        public string RawUrl { get; private set; }
-        public string MarkdownUrl { get; private set; }
-
-        public async Task AddAsync(Image image)
+        public async Task<Result> AddAsync(Image image)
         {
             var info = GetFileInfo(image);
             var name = StringId.New(10, StringIdRanges.Upper | StringIdRanges.Numeric) + info.extension;
-            await UpdateAsync(name, image);
+            return await UpdateAsync(name, image);
         }
 
-        public async Task UpdateAsync(string name, Image image)
+        public async Task<Result> UpdateAsync(string name, Image image)
         {
             var info = GetFileInfo(image);
             var client = new BlobClient(_settings.ConnectionString, _settings.ContainerName, name);
@@ -45,8 +42,7 @@ namespace ImgCloudPaste.Services
                 });
             }
 
-            RawUrl = client.Uri.AbsoluteUri;
-            MarkdownUrl = $"![img]({RawUrl})";
+            return GetResult(client);
         }
 
         public IEnumerable<BlobItem> GetBlobs()
@@ -68,14 +64,26 @@ namespace ImgCloudPaste.Services
             // so I just fall back to png when the type isn't recognized
             (".png", "image/png", ImageFormat.Png);
 
-        public async Task<Image> GetBlobImageAsync(BlobItem blob)
+        public async Task<(Image image, Result result)> GetBlobImageAsync(BlobItem blob)
         {
             var client = new BlobClient(_settings.ConnectionString, _settings.ContainerName, blob.Name);
                        
             using (var stream = await client.OpenReadAsync())
             {
-                return Image.FromStream(stream);
+                return (Image.FromStream(stream), GetResult(client));
             }
+        }
+
+        private Result GetResult(BlobClient blobClient) => new Result()
+        {
+            RawUrl = blobClient.Uri.AbsoluteUri,
+            MarkdownUrl = $"![img]({blobClient.Uri.AbsoluteUri})"
+        };
+
+        public class Result
+        {
+            public string RawUrl { get; set; }
+            public string MarkdownUrl { get; set; }
         }
     }
 }

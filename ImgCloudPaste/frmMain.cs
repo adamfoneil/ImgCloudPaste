@@ -13,6 +13,7 @@ namespace ImgCloudPaste
     {
         private Settings _settings;
         private ImageCloudPaste _cloudPaste;
+        private ImageCloudPaste.Result _currentImage;
 
         public frmMain()
         {
@@ -53,15 +54,13 @@ namespace ImgCloudPaste
                 {
                     var image = Clipboard.GetImage();
                     pictureBox1.Image = image;
-                    await _cloudPaste.AddAsync(image);
-                    btnCopyMarkdown.Visible = true;
-                    btnCopyRaw.Visible = true;
+                    _currentImage = await _cloudPaste.AddAsync(image);
+                    copyButtons1.Enabled = true;
                     tabControl1.SelectedIndex = 0;
                 }
                 catch (Exception exc)
                 {
-                    btnCopyMarkdown.Visible = false;
-                    btnCopyRaw.Visible = false;
+                    copyButtons1.Enabled = false;
                     MessageBox.Show($"Error uploading image: {exc.Message}");  
                 }
             }
@@ -69,7 +68,7 @@ namespace ImgCloudPaste
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Clipboard.SetText(_cloudPaste.MarkdownUrl);
+            WithCurrentImage((img) => Clipboard.SetText(_currentImage.MarkdownUrl));
         }
 
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
@@ -85,12 +84,20 @@ namespace ImgCloudPaste
 
         private void btnCopyRaw_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(_cloudPaste.RawUrl);
+            if (tabControl1.SelectedTab.Equals(tabPage1))
+            {
+                WithCurrentImage((img) => Clipboard.SetText(img.RawUrl));                
+            }
+            
+            if (tabControl1.SelectedTab.Equals(tabPage2))
+            {
+
+            }
         }
 
         private void btnCopyMarkdown_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(_cloudPaste.MarkdownUrl);
+            WithCurrentImage((img) => Clipboard.SetText(_currentImage.MarkdownUrl));
         }
 
         private async void lvBlobs_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
@@ -100,7 +107,9 @@ namespace ImgCloudPaste
                 var blobItem = e.Item as BlobListViewItem;
                 if (blobItem != null)
                 {
-                    pbBlob.Image = await _cloudPaste.GetBlobImageAsync(blobItem.Blob);
+                    var result = await _cloudPaste.GetBlobImageAsync(blobItem.Blob);
+                    pbBlob.Image = result.image;
+                    _currentImage = result.result;
                     lblBlobName.Text = blobItem.Blob.Name;
                 }
             }
@@ -123,12 +132,34 @@ namespace ImgCloudPaste
             try
             {
                 pbBlob.Image = Clipboard.GetImage();
-                await _cloudPaste.UpdateAsync(lblBlobName.Text, pbBlob.Image);
+                _currentImage = await _cloudPaste.UpdateAsync(lblBlobName.Text, pbBlob.Image);
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }
+        }
+
+        private void WithCurrentImage(Action<ImageCloudPaste.Result> action)
+        {
+            if (_currentImage != null)
+            {
+                action.Invoke(_currentImage);
+            }
+            else
+            {
+                MessageBox.Show("No current image");
+            }
+        }
+
+        private void copyButtons1_RawUrlClicked(object sender, EventArgs e)
+        {
+            WithCurrentImage((img) => Clipboard.SetText(img.RawUrl));
+        }
+
+        private void copyButtons1_MarkdownUrlClicked(object sender, EventArgs e)
+        {
+            WithCurrentImage((img) => Clipboard.SetText(img.MarkdownUrl));
         }
     }
 }
