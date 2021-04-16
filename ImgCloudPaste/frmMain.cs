@@ -66,11 +66,6 @@ namespace ImgCloudPaste
             }
         }
 
-        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            WithCurrentImage((img) => Clipboard.SetText(_currentImage.MarkdownUrl));
-        }
-
         private void toolStripStatusLabel1_Click(object sender, EventArgs e)
         {
             frmSettings dlg = new frmSettings();
@@ -80,24 +75,6 @@ namespace ImgCloudPaste
                 _settings = dlg.Settings;
                 _settings.Save();
             }
-        }
-
-        private void btnCopyRaw_Click(object sender, EventArgs e)
-        {
-            if (tabControl1.SelectedTab.Equals(tabPage1))
-            {
-                WithCurrentImage((img) => Clipboard.SetText(img.RawUrl));                
-            }
-            
-            if (tabControl1.SelectedTab.Equals(tabPage2))
-            {
-
-            }
-        }
-
-        private void btnCopyMarkdown_Click(object sender, EventArgs e)
-        {
-            WithCurrentImage((img) => Clipboard.SetText(_currentImage.MarkdownUrl));
         }
 
         private async void lvBlobs_ItemSelectionChanged(object sender, ListViewItemSelectionChangedEventArgs e)
