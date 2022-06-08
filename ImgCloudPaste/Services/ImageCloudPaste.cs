@@ -1,6 +1,5 @@
 ﻿using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
-using ImgCloudPaste.Controls;
 using ImgCloudPaste.Models;
 using StringIdLibrary;
 using System.Collections.Generic;

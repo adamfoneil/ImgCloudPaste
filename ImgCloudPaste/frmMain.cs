@@ -22,9 +22,16 @@ namespace ImgCloudPaste
 
         private void frmMain_Load(object sender, EventArgs e)
         {
-            _settings = SettingsBase.Load<Settings>();
-            _cloudPaste = new ImageCloudPaste(_settings);
-            ListBlobs();
+            try
+            {
+                _settings = SettingsBase.Load<Settings>();
+                _cloudPaste = new ImageCloudPaste(_settings);
+                ListBlobs();
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
         }
 
         private void ListBlobs()
