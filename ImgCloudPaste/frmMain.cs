@@ -60,10 +60,20 @@ namespace ImgCloudPaste
                 try
                 {
                     var image = Clipboard.GetImage();
-                    pictureBox1.Image = image;
-                    _currentImage = await _cloudPaste.AddAsync(image);
-                    copyButtons1.Enabled = true;
-                    tabControl1.SelectedIndex = 0;
+                    if (image != null)
+                    {
+                        pictureBox1.Image = image;
+                        _currentImage = await _cloudPaste.AddAsync(image);
+                        copyButtons1.Enabled = true;
+                        tabControl1.SelectedIndex = 0;
+                        return;
+                    }
+
+                    var files = Clipboard.GetFileDropList();
+                    foreach (var file in files)
+                    {
+
+                    }
                 }
                 catch (Exception exc)
                 {

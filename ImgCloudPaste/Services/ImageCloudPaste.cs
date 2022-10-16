@@ -2,6 +2,7 @@
 using Azure.Storage.Blobs.Models;
 using ImgCloudPaste.Models;
 using StringIdLibrary;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -55,6 +56,7 @@ namespace ImgCloudPaste.Services
         }
 
         private (string extension, string contentType, ImageFormat format) GetFileInfo(Image image) =>
+            (image == null) ? throw new Exception("Image is null") :
             (image.RawFormat.Equals(ImageFormat.Png)) ? (".png", "image/png", image.RawFormat) :
             (image.RawFormat.Equals(ImageFormat.Jpeg)) ? (".jpg", "image/jpg", image.RawFormat) :
             (image.RawFormat.Equals(ImageFormat.Gif)) ? (".gif", "image/gif", image.RawFormat) :
