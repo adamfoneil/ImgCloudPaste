@@ -81,6 +81,7 @@ namespace ImgCloudPaste
             {
                 _settings = dlg.Settings;
                 _settings.Save();
+                _cloudPaste = new ImageCloudPaste(_settings);
             }
         }
 
