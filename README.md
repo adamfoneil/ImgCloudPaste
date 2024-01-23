@@ -1,4 +1,4 @@
-I often need to paste screenshots in places that don't support image paste natively, such as GitHub readmes and wikis. In the past, I've manually saved images in blob storage, then manually copied links from Azure Storage Explorer. I finally got too tired of that, and made a little WinForms app to automate the blob upload and link retrieval.
+I often need to paste screenshots in places that as of this writing don't support image paste natively, such as GitHub readmes and wikis. In the past, I've manually saved images in blob storage, then manually copied links from Azure Storage Explorer. I finally got too tired of that, and made a little WinForms app to automate the blob upload and link retrieval.
 
 ![img](https://adamosoftware.blob.core.windows.net/images/BEV8P39JNN.png)
 
